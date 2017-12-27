@@ -1,4 +1,4 @@
-package multiplication;
+package multiplication.util;
 
 import java.awt.Color;
 import java.util.List;
@@ -17,8 +17,9 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-final class ComparisonPlot extends JFrame {
-    private XYSeriesCollection dataset = new XYSeriesCollection();
+public final class ComparisonPlot extends JFrame {
+
+    private XYSeriesCollection dataSet = new XYSeriesCollection();
 
     private ComparisonPlot(String title) {
         super(title);
@@ -28,7 +29,7 @@ final class ComparisonPlot extends JFrame {
         JFreeChart chart = ChartFactory.createScatterPlot(
                 "Complexity growth", "Elapsed time in ms",
                 "N elements in matrix",
-                dataset, PlotOrientation.HORIZONTAL, true, false, false);
+                dataSet, PlotOrientation.HORIZONTAL, true, false, false);
 
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setBackgroundPaint(new Color(255, 228, 196));
@@ -48,7 +49,7 @@ final class ComparisonPlot extends JFrame {
             series.add((Double) list.get(0), (Double) mapEntry.getKey());
         }
 
-        dataset.addSeries(series);
+        dataSet.addSeries(series);
     }
 
     @SafeVarargs

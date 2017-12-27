@@ -1,6 +1,7 @@
 package multiplication;
 
 
+import multiplication.util.MatrixHelperUtil;
 import org.junit.Test;
 
 
@@ -41,5 +42,10 @@ public class ConcurrentSquareMatrixMultiplierTest {
         double[][] matrixB = MatrixHelperUtil.random(200, 300);
 
         ConcurrentSquareMatrixMultiplier.multiply(matrixA, matrixB, CUSTOM);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionOnNullMatrix() {
+        ConcurrentSquareMatrixMultiplier.multiply(null, null, CUSTOM);
     }
 }

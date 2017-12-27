@@ -14,8 +14,13 @@ final class ConcurrentSquareMatrixMultiplier {
         CLASSIC, CUSTOM
     }
 
-    public static double[][] multiply(double[][] matrixA, double[][] matrixB,
-                                      MultiplicationAlgorithm multiplicationAlgorithm) {
+    static double[][] multiply(double[][] matrixA, double[][] matrixB,
+                               MultiplicationAlgorithm multiplicationAlgorithm) {
+
+        if (matrixA == null || matrixB == null) {
+            throw new IllegalArgumentException("Matrices should not be null");
+        }
+
         if (matrixA[0].length != matrixB.length) {
             throw new IllegalArgumentException("Illegal matrix dimensions.");
         }
@@ -38,7 +43,7 @@ final class ConcurrentSquareMatrixMultiplier {
         try {
             service.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return resultMatrix;

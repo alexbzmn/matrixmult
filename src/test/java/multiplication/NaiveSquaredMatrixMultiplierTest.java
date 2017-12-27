@@ -1,5 +1,6 @@
 package multiplication;
 
+import multiplication.util.MatrixHelperUtil;
 import org.junit.Test;
 
 
@@ -26,6 +27,11 @@ public class NaiveSquaredMatrixMultiplierTest {
         double[][] matrixB = MatrixHelperUtil.random(200, 300);
 
         NaiveSquaredMatrixMultiplier.multiplyNaiveCustom(matrixA, matrixB);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionOnNullMatrix() {
+        NaiveSquaredMatrixMultiplier.multiplyNaiveCustom(null, null);
     }
 
 }

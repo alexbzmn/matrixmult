@@ -2,6 +2,8 @@ package multiplication;
 
 import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
+import multiplication.util.ComparisonPlot;
+import multiplication.util.MatrixHelperUtil;
 import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -31,25 +33,10 @@ public class MatrixMultiplicationBenchmark {
             double[][] a = MatrixHelperUtil.random(i, i);
             double[][] b = MatrixHelperUtil.random(i, i);
 
-            StopWatch stopWatchNaiveClassic = StopWatch.createStarted();
-            NaiveSquaredMatrixMultiplier.multiplyNaivePrinceton(a, b);
-            long execTimeNaiveClassic = stopWatchNaiveClassic.getTime(TimeUnit.MILLISECONDS);
-            naiveClassicMetrics.put(dataSize, (double) execTimeNaiveClassic);
-
-            StopWatch stopWatchNaiveCustom = StopWatch.createStarted();
-            NaiveSquaredMatrixMultiplier.multiplyNaiveCustom(a, b);
-            long execTimeNaiveCustom = stopWatchNaiveCustom.getTime(TimeUnit.MILLISECONDS);
-            naiveCustomMetrics.put(dataSize, (double) execTimeNaiveCustom);
-
-            StopWatch stopWatchConcurrentClassic = StopWatch.createStarted();
-            ConcurrentSquareMatrixMultiplier.multiply(a, b, CLASSIC);
-            long execTimeConcurrentClassic = stopWatchConcurrentClassic.getTime(TimeUnit.MILLISECONDS);
-            concurrentClassicMetrics.put(dataSize, (double) execTimeConcurrentClassic);
-
-            StopWatch stopWatchConcurrentCustom = StopWatch.createStarted();
-            ConcurrentSquareMatrixMultiplier.multiply(a, b, CUSTOM);
-            long execTimeConcurrentCustom = stopWatchConcurrentCustom.getTime(TimeUnit.MILLISECONDS);
-            concurrentCustomMetrics.put(dataSize, (double) execTimeConcurrentCustom);
+            executeExperiment(() -> NaiveSquaredMatrixMultiplier.multiplyNaivePrinceton(a, b), naiveClassicMetrics, dataSize);
+            executeExperiment(() -> NaiveSquaredMatrixMultiplier.multiplyNaiveCustom(a, b), naiveCustomMetrics, dataSize);
+            executeExperiment(() -> ConcurrentSquareMatrixMultiplier.multiply(a, b, CLASSIC), concurrentClassicMetrics, dataSize);
+            executeExperiment(() -> ConcurrentSquareMatrixMultiplier.multiply(a, b, CUSTOM), concurrentCustomMetrics, dataSize);
 
             System.out.println(MessageFormat.format("{0}%", (((double) i / dimensionSizeFinish) * 100)));
         }
@@ -60,6 +47,14 @@ public class MatrixMultiplicationBenchmark {
                 new ImmutablePair<>("Concurrent Classic", concurrentClassicMetrics),
                 new ImmutablePair<>("Concurrent Custom", concurrentCustomMetrics)
         );
+    }
+
+    private static void executeExperiment(MatrixMultiplicationRunner matrixMultiplicationRunner,
+                                          MultiValueMap valueMap, double dataSize) {
+        StopWatch stopWatch = StopWatch.createStarted();
+        matrixMultiplicationRunner.run();
+        long execTime = stopWatch.getTime(TimeUnit.MILLISECONDS);
+        valueMap.put(dataSize, (double) execTime);
     }
 
 }

@@ -1,13 +1,13 @@
-package multiplication;
+package multiplication.util;
 
 import java.util.Random;
 
-final class MatrixHelperUtil {
+public final class MatrixHelperUtil {
     private MatrixHelperUtil() {
 
     }
 
-    static boolean equals(double[][] expected, double[][] actual) {
+    public static boolean equals(double[][] expected, double[][] actual) {
         int x = expected.length;
         int y = expected[0].length;
 
@@ -22,7 +22,7 @@ final class MatrixHelperUtil {
         return true;
     }
 
-    static double[][] random(int x, int y) {
+    public static double[][] random(int x, int y) {
         double[][] res = new double[y][y];
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {

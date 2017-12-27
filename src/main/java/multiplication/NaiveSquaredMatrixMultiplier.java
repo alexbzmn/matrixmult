@@ -10,30 +10,34 @@ final class NaiveSquaredMatrixMultiplier {
      * It performs better for me(my machine) due to reduced number of pointer movements for first matrix
      * and fact that matrices are squared (from task description).
      *
-     * @param a multiplicand
-     * @param b multiplier
+     * @param matrixA multiplicand
+     * @param matrixB multiplier
      * @return matrix multiplication product
      */
-    static double[][] multiplyNaiveCustom(double[][] a, double[][] b) {
-        int n = a.length;
-        int m = a[0].length;
-        int t = b.length;
-        int p = b[0].length;
+    static double[][] multiplyNaiveCustom(double[][] matrixA, double[][] matrixB) {
+        if (matrixA == null || matrixB == null) {
+            throw new IllegalArgumentException("Matrices should not be null");
+        }
 
-        if (m != t) {
+        int matrixARowNumber = matrixA.length;
+        int matrixBRowNumber = matrixB.length;
+        int matrixAColumnNumber = matrixA[0].length;
+        int matrixBColumnNumber = matrixB[0].length;
+
+        if (matrixAColumnNumber != matrixBRowNumber) {
             throw new IllegalArgumentException("Illegal matrix dimensions.");
         }
-        double[][] res = new double[n][p];
+        double[][] resultMatrix = new double[matrixARowNumber][matrixBColumnNumber];
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                for (int k = 0; k < p; k++) {
-                    res[i][k] += a[i][j] * b[j][k];
+        for (int i = 0; i < matrixARowNumber; i++) {
+            for (int j = 0; j < matrixAColumnNumber; j++) {
+                for (int k = 0; k < matrixBColumnNumber; k++) {
+                    resultMatrix[i][k] += matrixA[i][j] * matrixB[j][k];
                 }
             }
         }
 
-        return res;
+        return resultMatrix;
     }
 
     /**
@@ -49,7 +53,7 @@ final class NaiveSquaredMatrixMultiplier {
         int n1 = a[0].length;
         int m2 = b.length;
         int n2 = b[0].length;
-        if (n1 != m2) throw new RuntimeException("Illegal matrix dimensions.");
+        if (n1 != m2) throw new IllegalArgumentException("Illegal matrix dimensions.");
         double[][] c = new double[m1][n2];
         for (int i = 0; i < m1; i++)
             for (int j = 0; j < n2; j++)
