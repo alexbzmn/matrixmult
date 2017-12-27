@@ -1,8 +1,9 @@
+package multiplication;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-//TODO check dimensions constraints
 final class ConcurrentSquareMatrixMultiplier {
 
     private ConcurrentSquareMatrixMultiplier() {
@@ -15,6 +16,10 @@ final class ConcurrentSquareMatrixMultiplier {
 
     public static double[][] multiply(double[][] matrixA, double[][] matrixB,
                                       MultiplicationAlgorithm multiplicationAlgorithm) {
+        if (matrixA[0].length != matrixB.length) {
+            throw new IllegalArgumentException("Illegal matrix dimensions.");
+        }
+
         int matrixAHeight = matrixA.length;
         int matrixBWidth = matrixB[0].length;
 

@@ -1,3 +1,5 @@
+package multiplication;
+
 final class NaiveSquaredMatrixMultiplier {
 
     private NaiveSquaredMatrixMultiplier() {
@@ -18,7 +20,9 @@ final class NaiveSquaredMatrixMultiplier {
         int t = b.length;
         int p = b[0].length;
 
-        if (m != t) throw new RuntimeException("Illegal matrix dimensions.");
+        if (m != t) {
+            throw new IllegalArgumentException("Illegal matrix dimensions.");
+        }
         double[][] res = new double[n][p];
 
         for (int i = 0; i < n; i++) {

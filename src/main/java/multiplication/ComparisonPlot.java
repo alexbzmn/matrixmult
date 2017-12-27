@@ -1,3 +1,5 @@
+package multiplication;
+
 import java.awt.Color;
 import java.util.List;
 import java.util.Map;

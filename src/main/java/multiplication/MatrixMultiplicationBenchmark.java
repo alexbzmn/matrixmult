@@ -1,8 +1,14 @@
+package multiplication;
+
 import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+
+
+import static multiplication.ConcurrentSquareMatrixMultiplier.MultiplicationAlgorithm.CLASSIC;
+import static multiplication.ConcurrentSquareMatrixMultiplier.MultiplicationAlgorithm.CUSTOM;
 
 
 public class MatrixMultiplicationBenchmark {
@@ -36,12 +42,12 @@ public class MatrixMultiplicationBenchmark {
             naiveCustomMetrics.put(dataSize, (double) execTimeNaiveCustom);
 
             StopWatch stopWatchConcurrentClassic = StopWatch.createStarted();
-            ConcurrentSquareMatrixMultiplier.multiply(a, b, ConcurrentSquareMatrixMultiplier.MultiplicationAlgorithm.CLASSIC);
+            ConcurrentSquareMatrixMultiplier.multiply(a, b, CLASSIC);
             long execTimeConcurrentClassic = stopWatchConcurrentClassic.getTime(TimeUnit.MILLISECONDS);
             concurrentClassicMetrics.put(dataSize, (double) execTimeConcurrentClassic);
 
             StopWatch stopWatchConcurrentCustom = StopWatch.createStarted();
-            ConcurrentSquareMatrixMultiplier.multiply(a, b, ConcurrentSquareMatrixMultiplier.MultiplicationAlgorithm.CUSTOM);
+            ConcurrentSquareMatrixMultiplier.multiply(a, b, CUSTOM);
             long execTimeConcurrentCustom = stopWatchConcurrentCustom.getTime(TimeUnit.MILLISECONDS);
             concurrentCustomMetrics.put(dataSize, (double) execTimeConcurrentCustom);
 
