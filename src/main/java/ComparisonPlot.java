@@ -15,7 +15,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public final class ComparisonPlot extends JFrame {
+final class ComparisonPlot extends JFrame {
     private XYSeriesCollection dataset = new XYSeriesCollection();
 
     private ComparisonPlot(String title) {

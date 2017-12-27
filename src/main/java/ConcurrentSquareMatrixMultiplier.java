@@ -3,7 +3,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 //TODO check dimensions constraints
-public class ConcurrentSquareMatrixMultiplier {
+final class ConcurrentSquareMatrixMultiplier {
+
+    private ConcurrentSquareMatrixMultiplier() {
+
+    }
 
     enum MultiplicationAlgorithm {
         CLASSIC, CUSTOM

@@ -1,14 +1,15 @@
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 
-public class MatrixMult {
+public class MatrixMultiplicationBenchmark {
 
+    /**
+     * Performs different matrix multiplication algorithm comparison for squared matrices
+     */
     public static void main(String[] args) {
         int dimensionSizeStart = 100;
         int dimensionSizeFinish = 300;
@@ -21,16 +22,16 @@ public class MatrixMult {
         for (int i = dimensionSizeStart; i <= dimensionSizeFinish; i += dimensionSizeStart * 0.1) {
             double dataSize = i * i;
 
-            double[][] a = random(i, i);
-            double[][] b = random(i, i);
+            double[][] a = MatrixHelperUtil.random(i, i);
+            double[][] b = MatrixHelperUtil.random(i, i);
 
             StopWatch stopWatchNaiveClassic = StopWatch.createStarted();
-            multiplyNaivePrinceton(a, b);
+            NaiveSquaredMatrixMultiplier.multiplyNaivePrinceton(a, b);
             long execTimeNaiveClassic = stopWatchNaiveClassic.getTime(TimeUnit.MILLISECONDS);
             naiveClassicMetrics.put(dataSize, (double) execTimeNaiveClassic);
 
             StopWatch stopWatchNaiveCustom = StopWatch.createStarted();
-            multiplyNaiveCustom(a, b);
+            NaiveSquaredMatrixMultiplier.multiplyNaiveCustom(a, b);
             long execTimeNaiveCustom = stopWatchNaiveCustom.getTime(TimeUnit.MILLISECONDS);
             naiveCustomMetrics.put(dataSize, (double) execTimeNaiveCustom);
 
@@ -55,73 +56,4 @@ public class MatrixMult {
         );
     }
 
-    static void printMatrix(double[][] matrix) {
-        Arrays.stream(matrix).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
-    }
-
-    private static void assertEqual(double[][] expected, double[][] actual) {
-        int x = expected.length;
-        int y = expected[0].length;
-
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                if (expected[i][j] != actual[i][j]) {
-                    throw new AssertionError("Matrices are not equal!");
-                }
-            }
-        }
-    }
-
-    private static double[][] random(int x, int y) {
-        double[][] res = new double[x][y];
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                res[i][j] = new Random().nextInt(1000);
-            }
-        }
-
-        return res;
-    }
-
-    private static double[][] multiplyNaiveCustom(double[][] a, double[][] b) {
-        int n = a.length;
-        int m = a[0].length;
-        int t = b.length;
-        int p = b[0].length;
-
-        if (m != t) throw new RuntimeException("Illegal matrix dimensions.");
-        double[][] res = new double[n][p];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                for (int k = 0; k < p; k++) {
-                    res[i][k] += a[i][j] * b[j][k];
-                }
-            }
-        }
-
-        return res;
-    }
-
-    /**
-     * Implementation is taken from Princeton library:
-     * https://introcs.cs.princeton.edu/java/22library/Matrix.java.html
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    private static double[][] multiplyNaivePrinceton(double[][] a, double[][] b) {
-        int m1 = a.length;
-        int n1 = a[0].length;
-        int m2 = b.length;
-        int n2 = b[0].length;
-        if (n1 != m2) throw new RuntimeException("Illegal matrix dimensions.");
-        double[][] c = new double[m1][n2];
-        for (int i = 0; i < m1; i++)
-            for (int j = 0; j < n2; j++)
-                for (int k = 0; k < n1; k++)
-                    c[i][j] += a[i][k] * b[k][j];
-        return c;
-    }
 }
