@@ -54,11 +54,11 @@ public final class ForkJoinSquareMatrixMultiplier {
 
                 invokeAll(tasks);
             } else {
-                multiplyRowByColumn(matrixA, matrixB, resultMatrix, row);
+                multiplySingleRowColumn();
             }
         }
 
-        private void multiplyRowByColumn(double[][] matrixA, double[][] matrixB, double[][] resultMatrix, int row) {
+        private void multiplySingleRowColumn() {
             for (int j = 0; j < matrixB[0].length; j++) {
                 for (int k = 0; k < matrixA.length; k++) {
                     resultMatrix[row][j] += matrixA[row][k] * matrixB[k][j];
