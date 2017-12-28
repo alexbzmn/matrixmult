@@ -20,22 +20,24 @@ public class MatrixMultiplicationBenchmark {
      */
     public static void main(String[] args) {
         int dimensionSizeStart = 100;
-        int dimensionSizeFinish = 300;
+        int dimensionSizeFinish = 500;
 
         MultiValueMap naiveClassicMetrics = new MultiValueMap();
         MultiValueMap naiveCustomMetrics = new MultiValueMap();
         MultiValueMap concurrentClassicMetrics = new MultiValueMap();
         MultiValueMap concurrentCustomMetrics = new MultiValueMap();
+        MultiValueMap concurrentForkJoinMetrics = new MultiValueMap();
 
-        for (int i = dimensionSizeStart; i <= dimensionSizeFinish; i += dimensionSizeStart * 0.1) {
+        for (int i = dimensionSizeStart; i <= dimensionSizeFinish; i += dimensionSizeStart * 0.3) {
             double dataSize = i * i;
 
             double[][] a = MatrixHelperUtil.random(i, i);
             double[][] b = MatrixHelperUtil.random(i, i);
 
-            executeExperiment(() -> NaiveSquaredMatrixMultiplier.multiplyNaivePrinceton(a, b), naiveClassicMetrics, dataSize);
-            executeExperiment(() -> NaiveSquaredMatrixMultiplier.multiplyNaiveCustom(a, b), naiveCustomMetrics, dataSize);
+            executeExperiment(() -> NaiveSquareMatrixMultiplier.multiplyNaivePrinceton(a, b), naiveClassicMetrics, dataSize);
+            executeExperiment(() -> NaiveSquareMatrixMultiplier.multiplyNaiveCustom(a, b), naiveCustomMetrics, dataSize);
             executeExperiment(() -> ConcurrentSquareMatrixMultiplier.multiply(a, b, CLASSIC), concurrentClassicMetrics, dataSize);
+            executeExperiment(() -> ForkJoinSquareMatrixMultiplier.multiply(a, b), concurrentForkJoinMetrics, dataSize);
             executeExperiment(() -> ConcurrentSquareMatrixMultiplier.multiply(a, b, CUSTOM), concurrentCustomMetrics, dataSize);
 
             System.out.println(MessageFormat.format("{0}%", (((double) i / dimensionSizeFinish) * 100)));
@@ -45,6 +47,7 @@ public class MatrixMultiplicationBenchmark {
                 new ImmutablePair<>("Naive Classic", naiveClassicMetrics),
                 new ImmutablePair<>("Naive Custom", naiveCustomMetrics),
                 new ImmutablePair<>("Concurrent Classic", concurrentClassicMetrics),
+                new ImmutablePair<>("Fork/Join", concurrentForkJoinMetrics),
                 new ImmutablePair<>("Concurrent Custom", concurrentCustomMetrics)
         );
     }

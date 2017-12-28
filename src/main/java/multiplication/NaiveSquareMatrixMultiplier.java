@@ -1,8 +1,8 @@
 package multiplication;
 
-final class NaiveSquaredMatrixMultiplier {
+final class NaiveSquareMatrixMultiplier {
 
-    private NaiveSquaredMatrixMultiplier() {
+    private NaiveSquareMatrixMultiplier() {
     }
 
     /**

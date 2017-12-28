@@ -17,7 +17,7 @@ public class ConcurrentSquareMatrixMultiplierTest {
         double[][] matrixA = MatrixHelperUtil.random(200, 200);
         double[][] matrixB = MatrixHelperUtil.random(200, 200);
 
-        double[][] expected = NaiveSquaredMatrixMultiplier.multiplyNaivePrinceton(matrixA, matrixB);
+        double[][] expected = NaiveSquareMatrixMultiplier.multiplyNaivePrinceton(matrixA, matrixB);
         double[][] actual = ConcurrentSquareMatrixMultiplier.multiply(matrixA, matrixB, CLASSIC);
         double[][] actualCustom = ConcurrentSquareMatrixMultiplier.multiply(matrixA, matrixB, CUSTOM);
 

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-public class NaiveSquaredMatrixMultiplierTest {
+public class NaiveSquareMatrixMultiplierTest {
 
     @Test
     public void shouldMultiplyCorrectly() {
@@ -14,8 +14,8 @@ public class NaiveSquaredMatrixMultiplierTest {
         double[][] matrixA = MatrixHelperUtil.random(200, 200);
         double[][] matrixB = MatrixHelperUtil.random(200, 200);
 
-        double[][] expected = NaiveSquaredMatrixMultiplier.multiplyNaivePrinceton(matrixA, matrixB);
-        double[][] actual = NaiveSquaredMatrixMultiplier.multiplyNaiveCustom(matrixA, matrixB);
+        double[][] expected = NaiveSquareMatrixMultiplier.multiplyNaivePrinceton(matrixA, matrixB);
+        double[][] actual = NaiveSquareMatrixMultiplier.multiplyNaiveCustom(matrixA, matrixB);
 
         assertTrue(MatrixHelperUtil.equals(expected, actual));
     }
@@ -26,12 +26,12 @@ public class NaiveSquaredMatrixMultiplierTest {
         double[][] matrixA = MatrixHelperUtil.random(200, 200);
         double[][] matrixB = MatrixHelperUtil.random(200, 300);
 
-        NaiveSquaredMatrixMultiplier.multiplyNaiveCustom(matrixA, matrixB);
+        NaiveSquareMatrixMultiplier.multiplyNaiveCustom(matrixA, matrixB);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionOnNullMatrix() {
-        NaiveSquaredMatrixMultiplier.multiplyNaiveCustom(null, null);
+        NaiveSquareMatrixMultiplier.multiplyNaiveCustom(null, null);
     }
 
 }

@@ -1,6 +1,5 @@
 package multiplication.util;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public final class MatrixHelperUtil {
@@ -33,9 +32,4 @@ public final class MatrixHelperUtil {
 
         return res;
     }
-
-    public static void printMatrix(double[][] matrix) {
-        Arrays.stream(matrix).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
-    }
-
 }
