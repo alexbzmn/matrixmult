@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
-public final class ForkJoinSquareMatrixMultiplier {
+final class ForkJoinSquareMatrixMultiplier {
     private static final int DEFAULT_ROW = -1;
 
     private ForkJoinSquareMatrixMultiplier() {

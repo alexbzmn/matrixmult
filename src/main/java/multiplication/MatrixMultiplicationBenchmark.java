@@ -20,7 +20,7 @@ public class MatrixMultiplicationBenchmark {
      */
     public static void main(String[] args) {
         int dimensionSizeStart = 100;
-        int dimensionSizeFinish = 500;
+        int dimensionSizeFinish = 900;
 
         MultiValueMap naiveClassicMetrics = new MultiValueMap();
         MultiValueMap naiveCustomMetrics = new MultiValueMap();
